@@ -1,0 +1,2 @@
+En el archivo hay dos programas, en uno esta el edificio por coordenadas,
+ el otro por primitivas. Esto es devido a que en uni aplique luces.Ademas enl de coordenadas está muy lento y no se puede apreciar muy bien.

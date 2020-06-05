@@ -1,0 +1,578 @@
+﻿ <!DOCTYPE html>
+
+<html>
+
+  <head>
+ 
+   <title>edificio_TRES_CAMARAS</title>
+ 
+   <style>
+      html, body { margin: 0; padding: 0; overflow: hidden; }
+
+    </style>
+
+  </head>
+
+  <body>
+      <div id="info">
+          EDIFICIO<br />
+
+          USAR LAS FLECHAS PARA MOVER LA CAMARA CON PERSPECTIVA<br />
+
+          o<br />
+
+      </div>
+
+      <script src="js/three.min.js"></script>
+      <script src="js/controls/OrbitControls.js"></script>
+      <script src='js/libs/dat.gui.min.js'></script>
+
+      <script>
+
+		var scene, aspect, camera,camera2,camera3,  renderer;
+
+
+		var mapWidth = 1000, mapHeight = 500;
+		var w = window.innerWidth, h = window.innerHeight;
+		var startTime = Date.now();
+
+
+		init();
+
+		animate();
+
+
+
+		function init() {
+
+
+
+		    scene = new THREE.Scene();
+		    scene.background = new THREE.Color(0x9320E8);
+
+			aspect = w / h;
+
+			camera = new THREE.PerspectiveCamera( 45, aspect, 0.1, 1000);
+
+			renderer = new THREE.WebGLRenderer();
+
+			renderer.setSize( window.innerWidth, window.innerHeight );
+
+			document.body.appendChild(renderer.domElement);
+			controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+
+			var size = 10;
+
+			var arrowSize = 1;
+
+			var divisions = size;
+
+			var origin = new THREE.Vector3( 0, 0, 0 );
+
+			var x = new THREE.Vector3( 1, 0, 0 );
+
+			var y = new THREE.Vector3( 0, 1, 0 );
+
+		  	var z = new THREE.Vector3( 0, 0, 1 );
+
+			var color1 = new THREE.Color( 0xFFFFFF );
+
+		  	var color2 = new THREE.Color( 0x333333 );
+
+		  	var colorR = new THREE.Color( 0xAA3333 );
+
+		  	var colorG = new THREE.Color( 0x33AA33 );
+
+		  	var colorB = new THREE.Color( 0x333366 );
+
+
+		  	//CREAR LAS GRILLAS PARA EL ESCENARIO
+
+		  	var axesHelper = new THREE.AxesHelper( size );
+
+		  	var gridHelperXY = new THREE.GridHelper( size, divisions, color1, color1);
+
+		  	var gridHelperXZ = new THREE.GridHelper( size, divisions, color2, color2 );
+
+		  	var gridHelperYZ = new THREE.GridHelper( size, divisions, color2, color2 );
+
+
+            //ROTARLAS PARA QUE QUEDEN EN EL ESPACIO ADECUADO
+
+            gridHelperXY.rotateOnWorldAxis ( x, THREE.Math.degToRad(90) );
+
+            gridHelperXZ.rotateOnWorldAxis ( y, THREE.Math.degToRad(90) );
+
+            gridHelperYZ.rotateOnWorldAxis ( z, THREE.Math.degToRad(90) );
+
+
+            //CREAR LAS FLECHAS QUE INDICAN LOS EJES DE COORDENADAS 3D
+
+            var arrowX = new THREE.ArrowHelper( x, origin, arrowSize, colorR );
+
+            var arrowY = new THREE.ArrowHelper( y, origin, arrowSize, colorG );
+
+            var arrowZ = new THREE.ArrowHelper( z, origin, arrowSize, colorB );
+
+
+			//CREAR LAS GEOMETRÍAS
+
+            //Punto
+            var cigeometry = new THREE.CylinderGeometry(2, 2, .6, 32);
+            var cimaterial = new THREE.MeshLambertMaterial ({ color: 0x807C6A });
+            var mesh = new THREE.Mesh(cigeometry, cimaterial);
+            mesh.position.z = 0;
+            mesh.position.x = 0;
+            mesh.position.y = 1.7;
+            scene.add(mesh);
+
+            var geoCilindro = new THREE.Geometry();
+
+            var zTemp = 0;
+
+            var res = 100.0;
+
+            for( var i = 0; i < res; i++){
+
+                for( var j = 0; j < res; j++){
+
+                    var punto = new THREE.Vector3();
+
+                    punto.x = (1 * Math.cos( ( j  *2* Math.PI )/res))+2;
+
+                    punto.y = (1 * i/res);
+
+                    punto.z = 1 * Math.sin( ( j  *2* Math.PI )/res);
+
+
+                    geoCilindro.vertices.push( punto );
+
+
+
+
+                }
+
+		if(punto.x<2){
+		break;
+		}
+
+
+var matLinea = new THREE.LineBasicMaterial( { color: 0x5A5E79 } );
+var cilindro = new THREE.Line(geoCilindro, matLinea);
+cilindro.rotation.x = -90 * (Math.PI / 180);
+cilindro.position.y = -100;
+scene.add(cilindro);
+
+scene.add( cilindro );
+
+}
+
+            var geoCilindro = new THREE.Geometry();
+
+            var zTemp = 0;
+
+            var res = 25.0;
+
+            for( var i = 0; i < res; i++){
+
+                for( var j = 0; j < res; j++){
+
+                    var punto = new THREE.Vector3();
+
+                    punto.x = .1 * Math.cos( ( j * 2 * Math.PI )/res);
+
+                    punto.y = (.1 * i/res)+3;
+
+                    punto.z = .1 * Math.sin( ( j * 2 * Math.PI )/res);
+
+
+                    geoCilindro.vertices.push( punto );
+
+
+
+
+
+var matLinea = new THREE.LineBasicMaterial( { color: 0xEBD58C } );
+var cilindro = new THREE.Line(geoCilindro, matLinea);
+var cilindro = new THREE.Line(geoCilindro, matLinea);
+cilindro.rotation.x = -90 * (Math.PI / 180);
+cilindro.position.y = -100;
+scene.add(cilindro);
+
+scene.add(cilindro);
+
+scene.add( cilindro );
+}
+}
+
+            var cigeometry1 = new THREE.CylinderGeometry(.25, .25, 2, 32);
+            var cimaterial1 = new THREE.MeshLambertMaterial({ color: 0x807C6A });
+            var mesh = new THREE.Mesh(cigeometry1, cimaterial1);
+            mesh.position.z = 5;
+            mesh.position.x = 5;
+            mesh.position.y = 1;
+            scene.add(mesh);
+
+
+
+            var mesh = new THREE.Mesh(cigeometry1, cimaterial1);
+            mesh.position.z = 5;
+            mesh.position.x = -5;
+            mesh.position.y = 1;
+            scene.add(mesh);
+
+
+            var mesh = new THREE.Mesh(cigeometry1, cimaterial1);
+            mesh.position.z = -5;
+            mesh.position.x = -5;
+            mesh.position.y = 1;
+            scene.add(mesh);
+
+            var mesh = new THREE.Mesh(cigeometry1, cimaterial1);
+            mesh.position.z = -5;
+            mesh.position.x = 5;
+            mesh.position.y = 1;
+            scene.add(mesh);
+
+
+
+            var cigeometry2 = new THREE.CylinderGeometry(.12, .12, 1.5, 32);
+            var mesh = new THREE.Mesh(cigeometry2, cimaterial1);
+            mesh.position.z = -5;
+            mesh.position.x = 5;
+            mesh.position.y = 2;
+            scene.add(mesh);
+
+
+
+            var mesh = new THREE.Mesh(cigeometry2, cimaterial1);
+            mesh.position.z = 5;
+            mesh.position.x = -5;
+            mesh.position.y = 2;
+            scene.add(mesh);
+
+
+
+            var mesh = new THREE.Mesh(cigeometry2, cimaterial1);
+            mesh.position.z = -5;
+            mesh.position.x = -5;
+            mesh.position.y = 2;
+            scene.add(mesh);
+
+
+
+
+            var mesh = new THREE.Mesh(cigeometry2, cimaterial1);
+            mesh.position.z = 5;
+            mesh.position.x = 5;
+            mesh.position.y = 2;
+            scene.add(mesh);
+
+
+		    //CREAR CONOS
+
+            var cogeometry = new THREE.ConeGeometry(.12, 1, 32);
+            var comaterial = new THREE.MeshLambertMaterial({ color: 0x807C6A });
+            var cone = new THREE.Mesh(cogeometry, comaterial);
+            cone.position.z = 5;
+            cone.position.x = -5;
+            cone.position.y = 2.9;
+            scene.add(cone);
+
+
+
+            var cone = new THREE.Mesh(cogeometry, comaterial);
+            cone.position.z = 5;
+            cone.position.x = 5;
+            cone.position.y = 2.9;
+            scene.add(cone);
+
+
+
+
+            var cone = new THREE.Mesh(cogeometry, comaterial);
+            cone.position.z = -5;
+            cone.position.x = -5;
+            cone.position.y = 2.9;
+            scene.add(cone);
+
+
+
+
+            var cone = new THREE.Mesh(cogeometry, comaterial);
+            cone.position.z = -5;
+            cone.position.x = 5;
+            cone.position.y = 2.9;
+            scene.add(cone);
+
+
+
+		//CREA EL SEMICIRCULO
+
+
+
+
+
+
+
+		var circleGeometry= new THREE.Geometry();
+		var geoEsfera = new THREE.Geometry();
+
+
+		var re = 180;
+		var re2 = 360;
+
+		for(var j=-180; j<re; j++){
+  		     for(var i=-360; i<re2; i++){
+         		var line = new THREE.Vector3();
+				line.x = (2 * Math.cos(Math.PI*j/re));
+				line.z = (2 * Math.cos(Math.PI*i/re2)*Math.sin(Math.PI*j/re));
+		        	line.y = (((2 * (Math.sin(Math.PI*i/re2))*Math.sin(Math.PI*j/re))/2)+2);
+					if( line.y < 2){
+
+					break;
+					}
+
+
+
+
+
+         		circleGeometry.vertices.push(line);
+  		   }
+ 		}
+
+var matEsfera = new THREE.LineBasicMaterial( { color: 0x4C637E } );
+
+var esfera = new THREE.Line( geoEsfera, matEsfera );
+
+scene.add( esfera );
+
+
+		               //crear cubo
+
+
+var material = new THREE.MeshLambertMaterial({ color: 0xFF9D29 });
+var cgeometry = new THREE.BoxGeometry(4, 1.5, 4);
+var mesh = new THREE.Mesh(cgeometry, material);
+mesh.position.z = 0;
+mesh.position.x = 0;
+mesh.position.y = 0.7;
+scene.add(mesh);
+
+
+
+
+var material1 = new THREE.MeshLambertMaterial({ color: 0xE06930 });
+var cgeometry1 = new THREE.BoxGeometry(1, 1, 1);
+var mesh = new THREE.Mesh(cgeometry1, material1);
+mesh.position.z = 2.5;
+mesh.position.x = -1.5;
+mesh.position.y = 0.5;
+scene.add(mesh);
+
+
+
+
+
+
+var mesh = new THREE.Mesh(cgeometry1, material1);
+mesh.position.z = 2.5;
+mesh.position.x = 1.5;
+mesh.position.y = 0.5;
+scene.add(mesh);
+
+
+
+
+
+
+var material2 = new THREE.MeshLambertMaterial({ color: 0xE0946F });
+var cgeometry2 = new THREE.BoxGeometry(.5, .5, .5);
+var mesh = new THREE.Mesh(cgeometry2, material2);
+mesh.position.z = 2.75;
+mesh.position.x = 1.5;
+mesh.position.y = 1.25;
+scene.add(mesh);
+
+
+
+
+var mesh = new THREE.Mesh(cgeometry2, material2);
+mesh.position.z = 2.75;
+mesh.position.x = -1.5;
+mesh.position.y = 1.25;
+scene.add(mesh);
+
+
+
+
+
+//cono
+//Punto
+
+
+
+
+var material3 = new THREE.MeshStandardMaterial({ color: 0x701AFA });
+var geometry3 = new THREE.PlaneGeometry(10000, 10000, 100, 100);
+
+var plane = new THREE.Mesh(geometry3, material3);
+plane.rotation.x = -90 * (Math.PI / 180);
+plane.position.y = -100;
+scene.add(plane);
+
+
+var light = new THREE.PointLight(0xffffff, 2.0, 600);
+scene.add(light);
+light.position.set(4, 3.5, 4);
+var pointLightHelper = new THREE.PointLightHelper(light);
+scene.add(pointLightHelper);
+
+
+
+
+var width = 90.0;
+var height = 90.0;
+var FOV = 30.0;			//Ángulo de apertura
+var sinFOV = Math.sin((FOV / 2.0) * Math.PI / 180.0);
+var aR = width / height;	//AspectRatio
+var nearZ = -1;
+var farZ = -50;
+
+
+camera2 = new THREE.OrthographicCamera(-width/8, width/8, height/8 , -height/8, 1, 1000);
+var helper = new THREE.CameraHelper(camera2);
+scene.add(helper);
+
+
+
+
+
+var width = 90.0;
+var height = 90.0;
+var FOV = 30.0;			//Ángulo de apertura
+var sinFOV = Math.sin((FOV / 2.0) * Math.PI / 180.0);
+var aR = width / height;	//AspectRatio
+var nearZ = -1;
+var farZ = -50;
+
+
+camera3 = new THREE.OrthographicCamera(-width / 8, width / 8, height / 8, -height / 8, 1, 1000);
+var helper = new THREE.CameraHelper(camera2);
+scene.add(helper);
+
+
+
+
+
+
+
+//CREAR LOS MATERIALES
+
+            var matLinea = new THREE.LineBasicMaterial( { color: 0xFFFFFF } );
+
+
+			//CREAR LOS OBJETOS
+
+		//var cilindro = new THREE.Line( geoCilindro, matLinea );
+
+
+var material = new THREE.MeshBasicMaterial({color:0xFFFFFF, size: 0.1});
+		var circle = new THREE.Line(circleGeometry, material);
+
+		  	//AGREGAR A LA ESCENA
+
+		  	//scene.add( gridHelperXY );
+
+            scene.add( gridHelperXZ );
+
+		  	scene.add( arrowX );
+
+		  	scene.add( arrowY );
+
+		  	scene.add( arrowZ );
+				//scene.add( cilindro );
+
+			scene.add( circle );
+
+
+			camera.position.x = 20;
+
+			camera.position.y = 5;
+
+			camera.position.z = 5;
+
+
+
+
+		  	camera2.position.x = 0;
+
+		  	camera2.position.y = 5;
+
+		  	camera2.position.z = 0;
+		  	camera2.rotateOnAxis.y = 0;
+		  	camera2.lookAt(origin);
+
+
+		  	camera3.position.x = 5;
+
+		  	camera3.position.y = 0;
+
+		  	camera3.position.z = 0;
+		  	camera3.rotateOnAxis.y = 0;
+		  	camera3.lookAt(origin);
+		  	camera.lookAt( origin );
+
+			}
+
+
+		function animate() {
+
+	    requestAnimationFrame(animate);
+        controls.update();
+        render();
+
+
+
+    }
+
+
+    function render(){
+
+        var dtime = Date.now()-startTime;
+
+
+//10*Math.cos(dtime/10000)
+        //camera.position.x = 10*Math.cos(dtime/10000);
+
+
+//10*Math.sin(dtime/10000)
+        //camera.position.z = 10 * Math.sin(dtime / 10000);
+        //camera.lookAt(0,0,0);
+
+
+
+        //renderer.render( scene, camera );
+
+        renderer.setViewport(0, h - mapHeight - 500, 900+mapWidth, mapHeight);
+        renderer.setScissor(0, h - mapHeight - 500, 900+mapWidth, mapHeight);
+        renderer.setScissorTest(true);
+        renderer.render(scene, camera);
+
+        renderer.setViewport(500, h - mapHeight, mapWidth+900, mapHeight);
+        renderer.setScissor(500, h - mapHeight, mapWidth+900, mapHeight);
+        renderer.setScissorTest(true);
+        renderer.render(scene, camera3);
+        renderer.setViewport(0, h - mapHeight, mapWidth, mapHeight);
+        renderer.setScissor(0, h - mapHeight, mapWidth, mapHeight);
+        renderer.setScissorTest(true);
+        renderer.render(scene, camera2);
+
+   }
+
+      </script>
+
+  </body>
+
+</html>
